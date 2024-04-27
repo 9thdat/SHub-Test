@@ -1,12 +1,20 @@
+const {OK} = require('../core/success.response');
+const {BadRequestError} = require('../core/error.response');
+
 class ArrayService {
     /**
      * Sum of elements in the array from left to right
      * @param array - array of numbers
      * @param left - left index
      * @param right - right index
-     * @returns {number} sum of elements in the array from left to right
+     * @returns {OK} sum of elements in the array from left to right
      */
     static Type1(array, left, right) {
+        // Check input
+        if (!array || left < 0 || right >= array.length) {
+            throw new BadRequestError("Type1: Invalid input.");
+        }
+
         let sum = 0; // sum of elements in the range
 
         // loop through the array from left to right
@@ -14,7 +22,10 @@ class ArrayService {
             sum += array[i];
         }
 
-        return sum;
+        return new OK({
+            message: "Success",
+            metadata: {result: sum}
+        });
     }
 
     /**
@@ -22,9 +33,14 @@ class ArrayService {
      * @param array - array of numbers
      * @param left - left index
      * @param right - right index
-     * @returns {number} sum of even elements minus sum of odd elements in the array from left to right
+     * @returns {OK} sum of even elements minus sum of odd elements in the array from left to right
      */
     static Type2(array, left, right) {
+        // Check input
+        if (!array || left < 0 || right >= array.length) {
+            throw new BadRequestError("Type2: Invalid input.");
+        }
+
         let sumEvenInRange = 0; // sum of even numbers in the range
         let sumOddInRange = 0; // sum of odd numbers in the range
 
@@ -38,7 +54,10 @@ class ArrayService {
             }
         }
 
-        return sumEvenInRange - sumOddInRange;
+        return new OK({
+            message: "Success",
+            metadata: {result: sumEvenInRange - sumOddInRange}
+        });
     }
 }
 
